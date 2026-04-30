@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: fact_orders
+    description: >
+      Core fact table at order-item grain. One row per item within an order.
+      Payment value is prorated to item level. Review score is from the most recent review.
+    columns:
+      - name: order_id
+        tests: [not_null]
+      - name: order_item_id
+        tests: [not_null]
+      - name: customer_id
+        tests: [not_null]
+      - name: seller_id
+        tests: [not_null]
+      - name: product_id
+        tests: [not_null]
+      - name: purchase_date
+        tests: [not_null]
+      - name: item_price
+        tests: [not_null]
+      - name: freight_value
+        tests: [not_null]
+      - name: gross_revenue
+        tests: [not_null]
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: [delivered, shipped, canceled, unavailable, invoiced, processing, created, approved]
+
+  - name: customer_lifetime_value
+    description: >
+      One row per unique customer (customer_unique_id). Aggregates spend, order frequency,
+      delivery outcomes, and satisfaction across all orders for the same real person.
+    columns:
+      - name: customer_unique_id
+        tests: [unique, not_null]
+      - name: total_orders
+        tests: [not_null]
+      - name: total_gross_revenue
+        tests: [not_null]
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              values: [one_time, occasional, loyal]
+
+  - name: seller_performance
+    description: >
+      One row per seller. Summarises revenue, product breadth, delivery reliability
+      (on-time rate, average days to deliver), and customer satisfaction (avg review score).
+    columns:
+      - name: seller_id
+        tests: [unique, not_null]
+      - name: total_orders
+        tests: [not_null]
+      - name: performance_tier
+        tests:
+          - accepted_values:
+              values: [excellent, good, average, poor]

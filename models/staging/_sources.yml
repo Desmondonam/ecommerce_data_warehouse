@@ -1,0 +1,67 @@
+version: 2
+
+sources:
+  - name: olist
+    description: Raw Olist Brazilian e-commerce data loaded from CSV files.
+    schema: raw
+    tables:
+      - name: customers
+        identifier: olist_customers_dataset
+        description: One row per customer_id (a customer can appear multiple times with a shared customer_unique_id).
+        columns:
+          - name: customer_id
+            description: Order-scoped customer key (unique per order).
+            tests: [unique, not_null]
+          - name: customer_unique_id
+            description: Persistent customer identifier across orders.
+            tests: [not_null]
+
+      - name: sellers
+        identifier: olist_sellers_dataset
+        columns:
+          - name: seller_id
+            tests: [unique, not_null]
+
+      - name: products
+        identifier: olist_products_dataset
+        columns:
+          - name: product_id
+            tests: [unique, not_null]
+
+      - name: category_name_translation
+        identifier: product_category_name_translation
+        columns:
+          - name: product_category_name
+            tests: [unique, not_null]
+
+      - name: orders
+        identifier: olist_orders_dataset
+        columns:
+          - name: order_id
+            tests: [unique, not_null]
+          - name: customer_id
+            tests: [not_null]
+
+      - name: order_items
+        identifier: olist_order_items_dataset
+        columns:
+          - name: order_id
+            tests: [not_null]
+          - name: product_id
+            tests: [not_null]
+          - name: seller_id
+            tests: [not_null]
+
+      - name: order_payments
+        identifier: olist_order_payments_dataset
+        columns:
+          - name: order_id
+            tests: [not_null]
+
+      - name: order_reviews
+        identifier: olist_order_reviews_dataset
+        columns:
+          - name: review_id
+            tests: [not_null]
+          - name: order_id
+            tests: [not_null]
