@@ -1,0 +1,8 @@
+ecommerce_dw:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "warehouse.duckdb"
+      schema: marts
+      threads: 4

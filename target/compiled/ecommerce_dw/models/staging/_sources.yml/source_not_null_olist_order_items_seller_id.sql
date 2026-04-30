@@ -1,0 +1,11 @@
+
+    
+    
+
+
+
+select seller_id
+from "warehouse"."raw"."olist_order_items_dataset"
+where seller_id is null
+
+

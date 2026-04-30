@@ -38,12 +38,15 @@ payments as (
 
 -- Keep the most recent review per order to avoid fan-out on the join.
 reviews as (
-    select distinct on (order_id)
+    select
         order_id,
         review_score,
         review_created_at
     from {{ ref('stg_order_reviews') }}
-    order by order_id, review_created_at desc
+    qualify row_number() over (
+        partition by order_id
+        order by review_created_at desc
+    ) = 1
 ),
 
 -- Total item price per order, used to prorate the payment across items.
