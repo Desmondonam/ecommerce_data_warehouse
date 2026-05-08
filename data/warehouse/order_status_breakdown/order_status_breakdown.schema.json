@@ -1,0 +1,1 @@
+[{"name":"order_status","evidenceType":"string","typeFidelity":"precise"},{"name":"orders","evidenceType":"number","typeFidelity":"precise"},{"name":"pct_of_total","evidenceType":"number","typeFidelity":"precise"}]
