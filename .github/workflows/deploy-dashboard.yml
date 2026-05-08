@@ -9,6 +9,9 @@ on:
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -25,6 +28,10 @@ jobs:
 
       - name: Install dbt-duckdb
         run: pip install dbt-duckdb
+
+      - name: Load raw CSV data into DuckDB
+        working-directory: .
+        run: python scripts/load_raw_data.py
 
       - name: Run dbt to build mart tables
         working-directory: .
