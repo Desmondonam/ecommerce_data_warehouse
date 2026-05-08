@@ -6,6 +6,7 @@ on:
     paths:
       - "dashboard/**"
       - "models/**"
+      - "data/**"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 
